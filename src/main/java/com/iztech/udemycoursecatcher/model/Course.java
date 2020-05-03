@@ -10,10 +10,10 @@ import lombok.Data;
 @Data
 public class Course {
 	
-	//@Id
-	//private String id;
+	@Id
+	@Indexed
+	private String id;
 
-	@Indexed(unique= true)
 	private long udemyId;
 	private String title;
 	private boolean isPaid;
