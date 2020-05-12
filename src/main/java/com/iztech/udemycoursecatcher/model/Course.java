@@ -1,5 +1,7 @@
 package com.iztech.udemycoursecatcher.model;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +16,7 @@ public class Course {
 	@Indexed
 	private String id;
 
+	@NotBlank
 	private long udemyId;
 	private String title;
 	private boolean isPaid;
