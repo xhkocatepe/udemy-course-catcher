@@ -1,5 +1,6 @@
 package com.iztech.udemycoursecatcher.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -34,9 +35,9 @@ public class CourseController {
 	private final UdemyCourseConnector udemyCourseConnector;
 	
 	@GetMapping("/test")
-	public void test() {
+	public List<com.iztech.udemycoursecatcher.integration.udemy.client.Course> test() {
 		try {
-			udemyCourseConnector.get();
+			return udemyCourseConnector.get();
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,6 +45,8 @@ public class CourseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		return null;
 	}
 
 	@GetMapping("/{id}")
