@@ -11,21 +11,19 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class CourseMapper {
-//    public static List<Course> convertToModel(List<Course> courseList){
-//        return courseList.stream().map(item -> {
-//            Course course = new Course();
-//            course.setDiscount(item.getDiscount());
-//            course.setCategory();
-//            return course;
-//        }).collect(Collectors.toList());
-//        private String title;
-//        private Discount discount;
-//        private String url;
-//        private boolean is_paid;
-//        private float avg_rating;
-//        private int num_reviews;
-//        private Category primary_category;
-//        private Category primary_subcategory;
-//        private Date published_time;
-//    }
+    public static List<Course> convertToModel(List<com.iztech.udemycoursecatcher.integration.udemy.client.Course> courseList){
+        return courseList.stream().map(item -> {
+            Course course = Course.builder() // course model
+            .udemyId(item.getId())
+            .title(item.getTitle())
+            .discount(item.getDiscount())
+            .url(item.getUrl())
+            .isPaid(item.isPaid())
+            .category(item.getCategory())
+            .subCategory(item.getSubCategory())
+            .publishDate(item.getPublishDate()).build();
+
+            return course;
+        }).collect(Collectors.toList());
+    }
 }

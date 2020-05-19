@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.iztech.udemycoursecatcher.service.CourseService;
+import com.iztech.udemycoursecatcher.service.CourseServiceImpl;
+import com.iztech.udemycoursecatcher.util.mapper.CourseMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,22 +33,11 @@ import lombok.AllArgsConstructor;
 public class CourseController {
 
 	private final CourseRepository courseRepository;
-	
-	private final UdemyCourseConnector udemyCourseConnector;
+	private final CourseService courseService;
 	
 	@GetMapping("/test")
-	public List<com.iztech.udemycoursecatcher.integration.udemy.client.Course> test() {
-		try {
-			return udemyCourseConnector.get();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return null;
+	public List<Course> test() {
+		return courseService.saveCourse();
 	}
 
 	@GetMapping("/{id}")
