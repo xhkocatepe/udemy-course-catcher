@@ -1,2 +1,2 @@
 # udemy-course-catcher
-Udemy Course Namess
+Udemy Course Names
