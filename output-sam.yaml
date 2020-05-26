@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  UdemyCourseCatcherSless:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.iztech.udemycoursecatcher.LambdaHandler::handleRequest
+      Runtime: java11
+      CodeUri: s3://udemycatchersless/e02200e71c99a99460102185cc482dac
+      MemorySize: 512
+      Timeout: 300
+      Environment:
+        Variables:
+          UDEMY_HOST: https://www.udemy.com
+          MONGO_URI: mongodb+srv://admin:admin@cluster0-in3ks.mongodb.net/test?retryWrites=true&w=majority
+      Policies: AWSLambdaBasicExecutionRole
+      Events:
+        CheckWebsiteScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(10 minutes)
