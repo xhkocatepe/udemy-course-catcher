@@ -1,4 +1,4 @@
-package com.iztech.udemycoursecatcher.integration.udemy.client;
+package com.iztech.udemycoursecatcher.integration.udemy.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Price {
+public class UdemyPrice {
 	
 	private float amount;
 	private String currency;

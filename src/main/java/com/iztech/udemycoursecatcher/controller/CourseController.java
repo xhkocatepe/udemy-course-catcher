@@ -5,9 +5,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import com.iztech.udemycoursecatcher.service.CourseService;
-import com.iztech.udemycoursecatcher.service.CourseServiceImpl;
-import com.iztech.udemycoursecatcher.util.mapper.CourseMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.iztech.udemycoursecatcher.integration.udemy.connector.UdemyCourseConnector;
+import com.iztech.udemycoursecatcher.integration.udemy.mapper.CourseMapper;
+import com.iztech.udemycoursecatcher.integration.udemy.service.UdemyCourseService;
+import com.iztech.udemycoursecatcher.integration.udemy.service.UdemyCourseServiceImpl;
 import com.iztech.udemycoursecatcher.model.Course;
 import com.iztech.udemycoursecatcher.repository.CourseRepository;
 
@@ -33,7 +33,7 @@ import lombok.AllArgsConstructor;
 public class CourseController {
 
 	private final CourseRepository courseRepository;
-	private final CourseService courseService;
+	private final UdemyCourseService courseService;
 	
 	@GetMapping("/test")
 	public List<Course> test() {
@@ -41,7 +41,7 @@ public class CourseController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Course> getSubscriber(@PathVariable String id) {
+	public ResponseEntity<Course> getCourse(@PathVariable String id) {
 		Optional<Course> subscriber = courseRepository.findById(id);
 		if (subscriber.isPresent() == true) {
 			return new ResponseEntity<>(subscriber.get(), HttpStatus.OK);
@@ -51,7 +51,7 @@ public class CourseController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> postSubscriber(@Valid @RequestBody Course course) {
+	public ResponseEntity<String> postCourse(@Valid @RequestBody Course course) {
 		try {
 			courseRepository.save(course);
 		} catch (Exception e) {
@@ -61,7 +61,7 @@ public class CourseController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<String> putSubscriber(@PathVariable String id, @Valid @RequestBody Course course) {
+	public ResponseEntity<String> putCourse(@PathVariable String id, @Valid @RequestBody Course course) {
 		try {
 			course.setId(id);
 			courseRepository.save(course);
@@ -72,7 +72,7 @@ public class CourseController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteSubscriber(@Valid @PathVariable String id) {
+	public ResponseEntity<String> deleteCourse(@Valid @PathVariable String id) {
 		try {
 			courseRepository.deleteById(id);
 		} catch (Exception e) {

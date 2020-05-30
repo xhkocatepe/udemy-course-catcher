@@ -28,7 +28,7 @@ public class SubscriberCourseController {
 	private final SubscriberCourseRepository subscriberCourseRepository;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<SubscriberCourse> getSubscriber(@PathVariable String id) {
+	public ResponseEntity<SubscriberCourse> getSubscriberCourse(@PathVariable String id) {
 		Optional<SubscriberCourse> subscriberCourse = subscriberCourseRepository.findById(id);
 		if (subscriberCourse.isPresent() == true) {
 			return new ResponseEntity<>(subscriberCourse.get(), HttpStatus.OK);
@@ -38,7 +38,7 @@ public class SubscriberCourseController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> postSubscriber(@Valid @RequestBody SubscriberCourse subscriberCourse) {
+	public ResponseEntity<String> postSubscriberCourse(@Valid @RequestBody SubscriberCourse subscriberCourse) {
 		try {
 			subscriberCourseRepository.save(subscriberCourse);
 		} catch (Exception e) {
@@ -48,7 +48,7 @@ public class SubscriberCourseController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<String> putSubscriber(@PathVariable String id,
+	public ResponseEntity<String> putSubscriberCourse(@PathVariable String id,
 			@Valid @RequestBody SubscriberCourse subscriberCourse) {
 		try {
 			subscriberCourse.setId(id);
@@ -60,7 +60,7 @@ public class SubscriberCourseController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteSubscriber(@Valid @PathVariable String id) {
+	public ResponseEntity<String> deleteSubscriberCourse(@Valid @PathVariable String id) {
 		try {
 			subscriberCourseRepository.deleteById(id);
 		} catch (Exception e) {

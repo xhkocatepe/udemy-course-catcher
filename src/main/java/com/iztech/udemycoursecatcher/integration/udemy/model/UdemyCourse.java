@@ -1,4 +1,4 @@
-package com.iztech.udemycoursecatcher.integration.udemy.client;
+package com.iztech.udemycoursecatcher.integration.udemy.model;
 
 
 import java.util.Date;
@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Course {
+public class UdemyCourse {
 	private long id;
 	private String title;
 	private Discount discount;
@@ -23,9 +23,9 @@ public class Course {
 	@JsonProperty("num_reviews")
 	private int numReviews;
 	@JsonProperty("primary_category")
-	private Category category;
+	private UdemyCategory category;
 	@JsonProperty("primary_subcategory")
-	private Category subCategory;
+	private UdemyCategory subCategory;
 	@JsonProperty("published_time")
 	private Date publishDate;
 }

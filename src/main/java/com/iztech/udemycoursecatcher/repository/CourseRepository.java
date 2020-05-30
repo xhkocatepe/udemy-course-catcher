@@ -1,7 +1,5 @@
 package com.iztech.udemycoursecatcher.repository;
 
-import java.util.List;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.iztech.udemycoursecatcher.model.Course;

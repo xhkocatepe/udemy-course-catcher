@@ -1,5 +1,5 @@
 package com.iztech.udemycoursecatcher.service;
 
-public interface CourseService {
+public class SubscriberServiceImpl {
 
 }

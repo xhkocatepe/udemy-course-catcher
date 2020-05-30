@@ -1,6 +1,6 @@
-package com.iztech.udemycoursecatcher.util.mapper;
+package com.iztech.udemycoursecatcher.integration.udemy.mapper;
 
-import com.iztech.udemycoursecatcher.integration.udemy.client.Category;
+import com.iztech.udemycoursecatcher.integration.udemy.model.UdemyCategory;
 import com.iztech.udemycoursecatcher.model.Course;
 import com.iztech.udemycoursecatcher.model.Discount;
 
@@ -11,7 +11,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class CourseMapper {
-    public static List<Course> convertToModel(List<com.iztech.udemycoursecatcher.integration.udemy.client.Course> courseList){
+    public static List<Course> convertToModel(List<com.iztech.udemycoursecatcher.integration.udemy.model.UdemyCourse> courseList){
         return courseList.stream().map(item -> {
             Course course = Course.builder() // course model
             .udemyId(item.getId())

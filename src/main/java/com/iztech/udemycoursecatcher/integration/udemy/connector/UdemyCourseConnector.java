@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iztech.udemycoursecatcher.integration.udemy.client.Course;
+import com.iztech.udemycoursecatcher.integration.udemy.model.UdemyCourse;
 
 @Service
 public class UdemyCourseConnector {
@@ -41,7 +41,7 @@ public class UdemyCourseConnector {
 				"Basic dkljSkdvRWt5NVZlUzk3MWNpc3ZVakZZaFdlOFlTSURPRmlHZ1RZVDpHVm1kYkVBNnQ0YUNMaUUxZm4zUWhseU9LNXdBbkdqR1Iwd3Q3NEdsUkpnS3ByaGNnYzdIS3pwUnFUTlNTcENuOVVZV3dXWEZ2akZmQ0Q0OU55TWkxbjF6NUI1TUhSTVAyMVFoUnZFOXBvWmFrcU9RYU1hczJEQkxkc3BKbVY5eA==");
 	}
 
-	public List<Course> get() throws JsonMappingException, JsonProcessingException {
+	public List<UdemyCourse> get() throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		this.endpoint = host + mapping + urlParams;
 		HttpEntity<String> requestEntity = new HttpEntity<String>("", this.headers);
@@ -49,7 +49,7 @@ public class UdemyCourseConnector {
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		JsonNode jsonNode = objectMapper.readTree(responseEntity.getBody());
 		String results = jsonNode.get("results").toString();
-		List<Course> listCourse = objectMapper.readValue(results, new TypeReference<List<Course>>(){});
+		List<UdemyCourse> listCourse = objectMapper.readValue(results, new TypeReference<List<UdemyCourse>>(){});
 		this.setStatus(responseEntity.getStatusCode());
 		return listCourse;
 	}
