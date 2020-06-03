@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iztech.udemycoursecatcher.model.Subscriber;
-import com.iztech.udemycoursecatcher.repository.SubscriberRepository;
+import com.iztech.udemycoursecatcher.service.SubscriberServiceImpl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @AllArgsConstructor
 public class SubscriberController {
 
-	private final SubscriberRepository subscriberRepository;
+	private final SubscriberServiceImpl subscriberServiceImpl;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Subscriber> getSubscriber(@PathVariable String id) {
-		Optional<Subscriber> subscriber = subscriberRepository.findById(id);
+		Optional<Subscriber> subscriber = subscriberServiceImpl.getSubscriber(id);
 		if (subscriber.isPresent() == true) {
 			return new ResponseEntity<>(subscriber.get(), HttpStatus.OK);
 		} else {
@@ -39,33 +39,39 @@ public class SubscriberController {
 
 	@PostMapping
 	public ResponseEntity<String> postSubscriber(@Valid @RequestBody Subscriber subscriber) {
-		try {
-			subscriberRepository.save(subscriber);
-		} catch (Exception e) {
+
+		boolean isSaved = subscriberServiceImpl.saveSubscriber(subscriber);
+
+		if (isSaved) {
+			return new ResponseEntity<>("The subscriber is saved", HttpStatus.OK);
+		} else {
 			return new ResponseEntity<>("The subscriber is not saved", HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("The subscriber is saved", HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<String> putSubscriber(@PathVariable String id, @Valid @RequestBody Subscriber subscriber) {
-		try {
-			subscriber.setId(id);
-			subscriberRepository.save(subscriber);
-		} catch (Exception e) {
+
+		subscriber.setId(id);
+		boolean isSaved = subscriberServiceImpl.saveSubscriber(subscriber);
+
+		if (isSaved) {
+			return new ResponseEntity<>("The subscriber is updated", HttpStatus.OK);
+		} else {
 			return new ResponseEntity<>("The subscriber is not updated", HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("The subscriber is updated", HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteSubscriber(@Valid @PathVariable String id) {
-		try {
-			subscriberRepository.deleteById(id);
-		} catch (Exception e) {
+
+		boolean isDeleted = subscriberServiceImpl.deleteSubscriber(id);
+
+		if (isDeleted) {
+			return new ResponseEntity<>("The subscriber is deleted", HttpStatus.OK);
+		} else {
 			return new ResponseEntity<>("The subscriber is not deleted", HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("The subscriber is deleted", HttpStatus.OK);
 	}
 
 }

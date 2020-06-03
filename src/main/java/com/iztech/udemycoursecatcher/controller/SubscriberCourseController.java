@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iztech.udemycoursecatcher.model.SubscriberCourse;
-import com.iztech.udemycoursecatcher.repository.SubscriberCourseRepository;
+import com.iztech.udemycoursecatcher.service.SubscriberCourseServiceImpl;
 
 import lombok.AllArgsConstructor;
 
@@ -25,11 +25,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SubscriberCourseController {
 
-	private final SubscriberCourseRepository subscriberCourseRepository;
+	private final SubscriberCourseServiceImpl subscriberCourseServiceImpl;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<SubscriberCourse> getSubscriberCourse(@PathVariable String id) {
-		Optional<SubscriberCourse> subscriberCourse = subscriberCourseRepository.findById(id);
+		Optional<SubscriberCourse> subscriberCourse = subscriberCourseServiceImpl.getSubscriberCourse(id);
 		if (subscriberCourse.isPresent() == true) {
 			return new ResponseEntity<>(subscriberCourse.get(), HttpStatus.OK);
 		} else {
@@ -39,34 +39,36 @@ public class SubscriberCourseController {
 
 	@PostMapping
 	public ResponseEntity<String> postSubscriberCourse(@Valid @RequestBody SubscriberCourse subscriberCourse) {
-		try {
-			subscriberCourseRepository.save(subscriberCourse);
-		} catch (Exception e) {
+		boolean isSaved = subscriberCourseServiceImpl.saveSubscriberCourse(subscriberCourse);
+		if (isSaved) {
 			return new ResponseEntity<>("The subscriberCourse is not saved", HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<>("The subscriberCourse is saved", HttpStatus.OK);
 		}
-		return new ResponseEntity<>("The subscriberCourse is saved", HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<String> putSubscriberCourse(@PathVariable String id,
 			@Valid @RequestBody SubscriberCourse subscriberCourse) {
-		try {
-			subscriberCourse.setId(id);
-			subscriberCourseRepository.save(subscriberCourse);
-		} catch (Exception e) {
+
+		subscriberCourse.setId(id);
+		boolean isSaved = subscriberCourseServiceImpl.saveSubscriberCourse(subscriberCourse);
+
+		if (isSaved) {
+			return new ResponseEntity<>("The subscriberCourse is updated", HttpStatus.OK);
+		} else {
 			return new ResponseEntity<>("The subscriberCourse is not updated", HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("The subscriberCourse is updated", HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteSubscriberCourse(@Valid @PathVariable String id) {
-		try {
-			subscriberCourseRepository.deleteById(id);
-		} catch (Exception e) {
+		boolean isDeleted = subscriberCourseServiceImpl.deleteSubscriberCourse(id);
+		if (isDeleted) {
+			return new ResponseEntity<>("The subscriberCourse is deleted", HttpStatus.OK);
+		} else {
 			return new ResponseEntity<>("The subscriberCourse is not deleted", HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("The subscriberCourse is deleted", HttpStatus.OK);
 	}
 
 }
